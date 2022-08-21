@@ -1,21 +1,26 @@
 import React from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {ITodo} from "../App";
+import {ITodo} from "../../App";
 
 export interface TodoState {
     todo: ITodo
-    deleteTodo: (id:string) => void
+    deleteTodo: (id:string) => void,
+    openTodoInfo: (id :string) => void,
 }
 
-export const TodoItem: React.FC<TodoState> = ({todo,deleteTodo}) => {
+export const TodoItem: React.FC<TodoState> = ({todo,deleteTodo,openTodoInfo}) => {
 
     const handleOnDeleteTodo = ()=> {
         deleteTodo(todo.id)
     }
 
+    const onPressOpenInfo = () => {
+        openTodoInfo(todo.id)
+    }
+
     return (
         <TouchableOpacity activeOpacity={0.7}
-                          onPress={()=>console.log('press on todo',todo.id)}
+                          onPress={onPressOpenInfo}
                           onLongPress={handleOnDeleteTodo}>
             <View style={styles.todoItem}>
                 <Text>{todo.title}</Text>

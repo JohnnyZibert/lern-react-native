@@ -1,8 +1,8 @@
-import {FlatList, StyleSheet, View} from 'react-native';
-import {Navbar} from "./src/Navbar";
-import {AddTodo} from "./src/AddTodo";
-import React, {useState} from "react";
-import {TodoItem} from "./src/TodoItem";
+import {Alert,  StyleSheet, View} from 'react-native';
+import {Navbar} from "./src/components/Navbar";
+import React, { useState} from "react";
+import {MainScreen} from "./src/screens/MainScreen";
+import {TodoInfoScreens} from "./src/screens/TodoInfoScreens";
 
 export interface ITodo {
     id: string,
@@ -13,6 +13,7 @@ export interface ITodo {
 
 const App: React.FC = () => {
     const [todos, setTodos] = useState<ITodo[]>([])
+    const [todoId, setTodoId] = useState<string | null>(null)
 
     const addTodos = (title: string) => {
         const newTodo: ITodo = {
@@ -22,20 +23,47 @@ const App: React.FC = () => {
         }
         setTodos(prev => [...prev, newTodo])
     }
-    const deleteTodo = (id:string) => {
-        setTodos(prev=>prev.filter((todo)=>todo.id !== id))
+    const deleteTodo = (id: string) => {
+        const todo = todos.find(t => t.id === id)
+        Alert.alert(
+            "Удаление задачи",
+            `Вы уверены в удалении задачи ${todo?.title}`,
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "OK", onPress: () => {
+                        setTodoId(null)
+                        setTodos(prev => prev.filter((todo) => todo.id !== id))
+                    }
+                }
+            ]
+        );
+
+    }
+
+    let content = <MainScreen addTodos={addTodos}
+                              todos={todos}
+                              deleteTodo={deleteTodo}
+                              onOpenTodoInfo={(id) => setTodoId(id)}
+    />
+
+    if (todoId) {
+        const selectTodo = todos.find((todo) => todo.id === todoId)
+
+        content = <TodoInfoScreens
+            onBackToListTodo={() => setTodoId(null)}
+            todo={selectTodo!}
+            deleteTodoInfo={deleteTodo}/>
     }
 
     return (
         <View style={styles.container}>
             <Navbar title={"Todo"}/>
-            <View style={styles.blockTodo}>
-                <AddTodo addTodos={addTodos}/>
-            </View>
-            <FlatList style={styles.taskBlock}
-                      data={todos}
-                      keyExtractor={item => item.id}
-                      renderItem={({item}) => <TodoItem deleteTodo={deleteTodo} todo={item}/>}/>
+            {content}
+
         </View>
     );
 }
