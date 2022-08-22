@@ -1,6 +1,8 @@
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
+
 import {ITodo} from "../../App";
+import {AppFontText} from "../ui/AppFontText";
 
 export interface TodoState {
     todo: ITodo
@@ -23,7 +25,7 @@ export const TodoItem: React.FC<TodoState> = ({todo,deleteTodo,openTodoInfo}) =>
                           onPress={onPressOpenInfo}
                           onLongPress={handleOnDeleteTodo}>
             <View style={styles.todoItem}>
-                <Text>{todo.title}</Text>
+                <AppFontText>{todo.title}</AppFontText>
             </View>
         </TouchableOpacity>
     )

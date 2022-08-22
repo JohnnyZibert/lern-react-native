@@ -1,8 +1,20 @@
-import {Alert,  StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
+import * as Font from 'expo-font'
+import React, {useState} from "react";
+import AppLoading from 'expo-app-loading'
+
 import {Navbar} from "./src/components/Navbar";
-import React, { useState} from "react";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoInfoScreens} from "./src/screens/TodoInfoScreens";
+
+
+async function loadApplication() {
+    await Font.loadAsync({
+        'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
+        'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf')
+    })
+
+}
 
 export interface ITodo {
     id: string,
@@ -12,8 +24,15 @@ export interface ITodo {
 
 
 const App: React.FC = () => {
+    const [isReady, setReady] = useState<boolean>(false)
     const [todos, setTodos] = useState<ITodo[]>([])
     const [todoId, setTodoId] = useState<string | null>(null)
+
+    if (!isReady) {
+    return <AppLoading startAsync={loadApplication}
+                       onError={err=>console.log(err)}
+                       onFinish={()=>setReady(true)}/>
+    }
 
     const addTodos = (title: string) => {
         const newTodo: ITodo = {
@@ -44,6 +63,15 @@ const App: React.FC = () => {
 
     }
 
+    const upDateTitle = (id: string, title: string) => {
+        setTodos((old) => old.map((todo) => {
+            if (todo.id === id) {
+                todo.title = title
+            }
+            return todo
+        }))
+    }
+
     let content = <MainScreen addTodos={addTodos}
                               todos={todos}
                               deleteTodo={deleteTodo}
@@ -56,7 +84,9 @@ const App: React.FC = () => {
         content = <TodoInfoScreens
             onBackToListTodo={() => setTodoId(null)}
             todo={selectTodo!}
-            deleteTodoInfo={deleteTodo}/>
+            deleteTodoInfo={deleteTodo}
+            onSaveHandler={upDateTitle}
+        />
     }
 
     return (

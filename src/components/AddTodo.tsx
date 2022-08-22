@@ -1,5 +1,6 @@
-import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
+import {Alert, StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from "react";
+import { AntDesign } from '@expo/vector-icons';
 
 
 export interface ITodoFormType {
@@ -27,7 +28,13 @@ export const AddTodo: React.FC<ITodoFormType> = props => {
                        placeholder={'Введите задачу'}
                        autoCorrect={false}
                        autoCapitalize={"none"}/>
-            <Button title={'Добавить'} onPress={handleOnPress}/>
+            <View style={styles.addButton}>
+            <AntDesign.Button
+                name="pluscircleo"
+                size={24} color="white"
+                onPress={handleOnPress}>Добавить</AntDesign.Button>
+            </View>
+
         </View>
     )
 }
@@ -45,6 +52,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         padding: 10,
         alignItems: "center",
-
+    },
+    addButton:{
+        alignItems:"center",
+        justifyContent:"center",
     }
 })

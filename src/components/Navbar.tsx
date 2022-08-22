@@ -1,6 +1,8 @@
 import React from "react";
-import {View, Text, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import {THEME} from "./color-styles";
+
+import {AppBoldFont} from "../ui/AppBoldFont";
 
 interface INavbar {
     title: string
@@ -9,7 +11,7 @@ interface INavbar {
 export const Navbar: React.FC<INavbar> = ({title}) => {
     return (
         <View style={styles.headerContainer}>
-            <Text style={styles.text}>{title}</Text>
+            <AppBoldFont style={styles.text}>{title}</AppBoldFont>
         </View>
     )
 }
