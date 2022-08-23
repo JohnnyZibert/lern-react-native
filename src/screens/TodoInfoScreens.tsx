@@ -1,13 +1,16 @@
-import {Button, View, StyleSheet} from "react-native";
+import {View, StyleSheet, Dimensions} from "react-native";
 import React, {useState} from "react";
-
 
 
 import {ITodo} from "../../App";
 import {AppCart} from "../ui/AppCart";
 import {EditModal} from "../components/EditModal";
 import {AppFontText} from "../ui/AppFontText";
-import {THEME} from "../components/color-styles";
+import {THEME} from "../components/constans";
+import {AppButton} from "../ui/AppButton";
+import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 interface ITodoInfoScreensProps {
     onBackToListTodo: () => void
@@ -39,14 +42,21 @@ export const TodoInfoScreens: React.FC<ITodoInfoScreensProps> =
                     <AppFontText style={styles.title}>
                         {todo.title}
                     </AppFontText>
-                    <Button title={'Edit'} onPress={() => setModalVisible(true)}/>
+                    <AppButton onPress={() => setModalVisible(true)}>
+                        <FontAwesome5 name="edit" size={24} color="white" />
+                    </AppButton>
                 </AppCart>
                 <View style={styles.buttons}>
                     <View style={styles.button}>
-                        <Button title={'Back'} onPress={onBackToListTodo} color={THEME.GREY_BTN}/>
+
+                        <AppButton onPress={onBackToListTodo} color={THEME.GREY_BTN}>
+                            <Ionicons name="arrow-back" size={24} color="white" />
+                        </AppButton>
                     </View>
                     <View style={styles.button}>
-                        <Button title={'Delete'} onPress={() => deleteTodoInfo(todo.id)} color={THEME.RED_BTN}/>
+                        <AppButton onPress={() => deleteTodoInfo(todo.id)} color={THEME.RED_BTN}>
+                            <AntDesign name="delete" size={24} color="white" />
+                        </AppButton>
                     </View>
                 </View>
             </View>
@@ -66,7 +76,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     button: {
-        width: '40%',
+       width: Dimensions.get('window').width /4
     },
     cartContainer: {
         margin: 30,

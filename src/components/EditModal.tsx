@@ -1,8 +1,9 @@
-import {Alert, Button, Modal, StyleSheet, TextInput, View} from "react-native";
+import {Alert, Modal, StyleSheet, TextInput, View} from "react-native";
 import React, {useState} from "react";
-import {THEME} from "./color-styles";
+import {THEME} from "./constans";
 
 import {ITodo} from "../../App";
+import {AppButton} from "../ui/AppButton";
 
 interface IEditModalProps {
     modalVisible: boolean
@@ -43,13 +44,13 @@ export const EditModal: React.FC<IEditModalProps> = ({
                            value={title}
                            onChangeText={setTitle}/>
                 <View style={styles.buttons}>
-                    <View style={styles.button}>
-                        <Button title={'Cancel'}
+                    <View>
+                        <AppButton
                                 onPress={() => setModalVisible(false)}
-                                color={THEME.RED_BTN}></Button>
+                                color={THEME.RED_BTN}>Cancel</AppButton>
                     </View>
-                    <View style={styles.button}>
-                        <Button title={'Save'} onPress={saveHandler}></Button>
+                    <View>
+                        <AppButton color={THEME.MAIN_COLOR} onPress={saveHandler}>Save</AppButton>
                     </View>
                 </View>
             </View>
@@ -77,7 +78,5 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         width: '100%',
     },
-    button: {
-        width: '20%',
-    }
+
 })

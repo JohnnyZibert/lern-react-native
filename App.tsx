@@ -6,6 +6,7 @@ import AppLoading from 'expo-app-loading'
 import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoInfoScreens} from "./src/screens/TodoInfoScreens";
+import {THEME} from "./src/components/constans";
 
 
 async function loadApplication() {
@@ -101,13 +102,12 @@ const App: React.FC = () => {
 export default App
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+    },
     blockTodo: {
-        paddingHorizontal: 30,
+        paddingHorizontal: THEME.PADDING_HORIZONTAL,
         paddingVertical: 20,
         marginBottom: 20,
     },
-    taskBlock: {
-        marginHorizontal: 25,
-    }
+
 })

@@ -1,6 +1,7 @@
-import {Alert, StyleSheet, TextInput, View} from 'react-native';
+import {Alert, Keyboard, StyleSheet, TextInput, View} from 'react-native';
 import React, {useState} from "react";
 import { AntDesign } from '@expo/vector-icons';
+import {THEME} from "./constans";
 
 
 export interface ITodoFormType {
@@ -14,6 +15,7 @@ export const AddTodo: React.FC<ITodoFormType> = props => {
         if (value.trim()) {
             props.addTodos(value)
             setValue('')
+            Keyboard.dismiss()
         } else {
             Alert.alert('Введите задачу!')
         }
@@ -32,9 +34,9 @@ export const AddTodo: React.FC<ITodoFormType> = props => {
             <AntDesign.Button
                 name="pluscircleo"
                 size={24} color="white"
+                backgroundColor={THEME.MAIN_COLOR}
                 onPress={handleOnPress}>Добавить</AntDesign.Button>
             </View>
-
         </View>
     )
 }
